@@ -7,6 +7,7 @@ const db = require('./database').getInstance();
 const app = express();
 
 db.setModels();
+
 const port = 5000;
 
 app.use(express.static(path.join(process.cwd(), 'dataForAll')));
