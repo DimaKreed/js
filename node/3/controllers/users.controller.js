@@ -1,11 +1,11 @@
-const { usersService } = require('../services');
+const { usersService, emailService } = require('../services');
 const {
     success: {
         OK, CREATED, DELETED, UPDATED
     }
 } = require('../database/success');
 const { ErrorHandler, errors: { AlREADY_EXISTS, NOT_FOUND } } = require('../database/errors');
-
+const { WELCOME } = require('../constants/email.actions-enum');
 const { password: passwordHasher } = require('../helpers');
 
 module.exports = {
@@ -16,6 +16,8 @@ module.exports = {
             req.user.password = await passwordHasher.hash(req.user.password);
 
             await usersService.createUser(req.user);
+
+            await emailService.sendMail(req.user.email, WELCOME, { userName: req.user.name });
 
             res.status(CREATED.code).json(CREATED.message);
         } catch (e) { next(e); }
