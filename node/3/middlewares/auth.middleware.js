@@ -64,7 +64,7 @@ module.exports = {
                 throw new ErrorHandler(NOT_VALID_TOKEN.code, NOT_VALID_TOKEN.message);
             }
 
-            req.user = userWithToken;
+            req.userWithToken = userWithToken;
 
             next();
         } catch (e) {
@@ -99,9 +99,11 @@ module.exports = {
 
     checkPermission: (req, res, next) => {
         try {
-            if (req.user.id !== +req.params.user_id) {
+            if (req.userWithToken.id !== +req.params.user_id) {
                 throw new ErrorHandler(PERMISSION_DENIED.code, PERMISSION_DENIED.message);
             }
+
+            next();
         } catch (e) {
             next(e);
         }

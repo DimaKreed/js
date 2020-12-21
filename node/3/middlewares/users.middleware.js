@@ -31,6 +31,7 @@ module.exports = {
             const users = await usersService.getUsers();
             if (!users || !users.length) throw new ErrorHandler(NOT_FOUND.code, NOT_FOUND.message);
             req.users = users;
+
             next();
         } catch (e) {
             next(e);
@@ -45,7 +46,7 @@ module.exports = {
                 req.user = userById;
             }
 
-            if (req.body) {
+            if (Object.keys(req.body).length) {
                 const userByParams = await usersService.getUserByParams(req.body);
                 if (!userByParams) throw new ErrorHandler(NOT_FOUND.code, NOT_FOUND.message);
                 req.user = userByParams;
@@ -102,8 +103,9 @@ module.exports = {
                 users.forEach((user1) => { usersService.normalizeUser(user1); });
                 req.users = users;
             }
+
             if (user) {
-                user.forEach((user1) => { usersService.normalizeUser(user1); });
+                usersService.normalizeUser(user);
                 req.user = user;
             }
 
