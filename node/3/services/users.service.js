@@ -9,19 +9,22 @@ module.exports = {
         return UserModel.create(user);
     },
 
-    getUsers: () => {
-        const CarModel = db.getModel('Car');
-        const UserModel = db.getModel('User');
-        return UserModel.findAll({
-            include: CarModel
-        });
-    },
     getUserById: (id) => {
         const CarModel = db.getModel('Car');
         const UserModel = db.getModel('User');
         return UserModel.findByPk(id, {
             include: CarModel,
             exclude: 'password',
+        });
+    },
+    getUsers: (where = {}, limit = 10, offset = 0) => {
+        const CarModel = db.getModel('Car');
+        const UserModel = db.getModel('User');
+        return UserModel.findAll({
+            where,
+            include: CarModel,
+            limit,
+            offset
         });
     },
     getUserByParams: (param) => {

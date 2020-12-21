@@ -28,7 +28,10 @@ module.exports = {
 
     checkIsUsersGot: async (req, res, next) => {
         try {
-            const users = await usersService.getUsers();
+            const { limit, offset, ...where } = req.query;
+
+            const users = await usersService.getUsers(where, limit, offset);
+
             if (!users || !users.length) throw new ErrorHandler(NOT_FOUND.code, NOT_FOUND.message);
             req.users = users;
 
