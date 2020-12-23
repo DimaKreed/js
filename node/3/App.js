@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
-const routes = require('./routes');
+const fileUpload = require('express-fileupload');
 
+const routes = require('./routes');
 const db = require('./database').getInstance();
 
 const app = express();
@@ -10,8 +11,9 @@ db.setModels();
 
 const port = 5000;
 
-app.use(express.static(path.join(process.cwd(), 'dataForAll')));
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.json());
+app.use(fileUpload());
 
 app.listen(port, () => {
     console.log(`App listen port ${port}`);

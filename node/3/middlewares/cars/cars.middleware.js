@@ -1,6 +1,6 @@
-const { carsValidator, carsIdValidator } = require('../validators');
-const { ErrorHandler, errorCodes: { BAD_REQUEST }, errors: { NOT_FOUND } } = require('../database/errors');
-const { carsService } = require('../services');
+const { carsValidator, carsIdValidator } = require('../../validators');
+const { ErrorHandler, errorCodes: { BAD_REQUEST }, errors: { NOT_FOUND } } = require('../../errors');
+const { carsService } = require('../../services');
 
 module.exports = {
     checkIsCarsGot: async (req, res, next) => {

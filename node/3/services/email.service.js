@@ -1,7 +1,7 @@
 const mailer = require('nodemailer');
 const EmailTemplates = require('email-templates');
 const path = require('path');
-const { ErrorHandler, errors: { WRONG_TEMPLATE_NAME } } = require('../database/errors');
+const { ErrorHandler, errors: { WRONG_TEMPLATE_NAME } } = require('../errors');
 const { ROOT_EMAIL, ROOT_EMAIL_PASSWORD, ROOT_EMAIL_SERVICE } = require('../configs/config');
 
 const templatesInfo = require('../email.templates');

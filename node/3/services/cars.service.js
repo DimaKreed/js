@@ -1,6 +1,6 @@
 const db = require('../database').getInstance();
 const { carsValidator } = require('../validators');
-const { ErrorHandler, errorCodes: { BAD_REQUEST } } = require('../database/errors');
+const { ErrorHandler, errorCodes: { BAD_REQUEST } } = require('../errors');
 const { models: { CAR }, } = require('../constants/constants');
 
 module.exports = {

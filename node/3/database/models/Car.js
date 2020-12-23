@@ -21,6 +21,12 @@ module.exports = (client, DataTypes) => {
                     model: USERS,
                     key: ID
                 }
+            },
+            photos: {
+                type: DataTypes.STRING
+            },
+            files: {
+                type: DataTypes.STRING
             }
         },
         {

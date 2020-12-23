@@ -26,6 +26,9 @@ module.exports = {
                 type: Sequelize.DataTypes.STRING,
                 allowNull: false,
             },
+            avatar: {
+                type: Sequelize.DataTypes.STRING
+            }
         });
 
         await queryInterface.createTable(tableNames.CARS, {

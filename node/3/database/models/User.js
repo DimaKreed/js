@@ -28,6 +28,9 @@ module.exports = (client, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
+            avatar: {
+                type: DataTypes.STRING
+            }
         },
         {
             tableName: USERS,

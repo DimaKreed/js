@@ -3,8 +3,8 @@ const {
     success: {
         OK, UPDATED, DELETED, CREATED
     }
-} = require('../database/success');
-const { ErrorHandler, errors: { AlREADY_EXISTS, NOT_FOUND } } = require('../database/errors');
+} = require('../success');
+const { ErrorHandler, errors: { AlREADY_EXISTS, NOT_FOUND } } = require('../errors');
 
 module.exports = {
     createCar: async (req, res, next) => {

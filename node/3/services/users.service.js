@@ -4,22 +4,22 @@ const { models: { CAR, USER } } = require('../constants/constants');
 module.exports = {
 
     createUser: (user) => {
-        const UserModel = db.getModel('User');
+        const UserModel = db.getModel(USER);
 
         return UserModel.create(user);
     },
 
     getUserById: (id) => {
-        const CarModel = db.getModel('Car');
-        const UserModel = db.getModel('User');
+        const CarModel = db.getModel(CAR);
+        const UserModel = db.getModel(USER);
         return UserModel.findByPk(id, {
             include: CarModel,
             exclude: 'password',
         });
     },
-    getUsers: (where = {}, limit = 10, offset = 0) => {
-        const CarModel = db.getModel('Car');
-        const UserModel = db.getModel('User');
+    wgetUsers: (where = {}, limit = 10, offset = 0) => {
+        const CarModel = db.getModel(CAR);
+        const UserModel = db.getModel(USER);
         return UserModel.findAll({
             where,
             include: CarModel,
@@ -36,10 +36,12 @@ module.exports = {
         });
     },
 
-    updateUser: (userId, user) => {
+    updateUser: (userId, userData) => {
+        console.log(userId);
+        console.log({ ...userData });
         const UserModel = db.getModel(USER);
         return UserModel.update(
-            { ...user },
+            { ...userData },
             { returning: true, where: { id: userId } }
         );
     },
