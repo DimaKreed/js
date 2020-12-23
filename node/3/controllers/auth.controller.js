@@ -1,5 +1,6 @@
 const { authService } = require('../services');
 const { tokinizer } = require('../helpers');
+const { success: { DELETED } } = require('../success');
 
 module.exports = {
     login: async (req, res, next) => {
@@ -15,6 +16,16 @@ module.exports = {
             }
 
             res.json(token_pair);
+        } catch (e) {
+            next(e);
+        }
+    },
+    logout: async (req, res, next) => {
+        try {
+            const { id } = req.userWithToken;
+            await authService.deleteTokenPair({ user_id: id });
+
+            res.status(DELETED.code).json(DELETED.message);
         } catch (e) {
             next(e);
         }

@@ -8,13 +8,18 @@ module.exports = {
     },
 
     updateTokenPair: (user_id, tokenPair) => {
-        console.log(user_id);
-        console.log(tokenPair);
         const AuthModel = db.getModel(O_AUTH);
         return AuthModel.update(
             tokenPair,
             { returning: true, where: user_id }
         );
+    },
+
+    deleteTokenPair: (user_id) => {
+        const AuthModel = db.getModel(O_AUTH);
+        return AuthModel.destroy({
+            where: user_id
+        });
     },
 
     getUserWithTokensByParams: (params) => {

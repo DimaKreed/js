@@ -1,16 +1,16 @@
 const jwt = require('jsonwebtoken');
-const { authValidator } = require('../validators');
-const { usersService, authService } = require('../services');
-const { ACCESS_TOKEN_SECRET_KEY, REFRESH_TOKEN_SECRET_KEY } = require('../configs/config');
+const { authValidator } = require('../../validators');
+const { usersService, authService } = require('../../services');
+const { ACCESS_TOKEN_SECRET_KEY, REFRESH_TOKEN_SECRET_KEY } = require('../../configs/config');
 const {
     errorCodes: { BAD_REQUEST },
     ErrorHandler,
     errors: {
         NOT_VALID_BODY, NOT_FOUND, NOT_VALID_TOKEN, PERMISSION_DENIED
     }
-} = require('../database/errors');
+} = require('../../errors');
 
-const { AUTHORIZATION } = require('../constants/constants');
+const { AUTHORIZATION } = require('../../constants/constants');
 
 module.exports = {
     checkAuthData: (req, res, next) => {

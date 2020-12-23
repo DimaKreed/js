@@ -13,4 +13,8 @@ authRoutes.post('/',
 authRoutes.post('/refresh',
     authMiddleware.checkRefreshToken,
     authController.refreshAccessToken);
+authRoutes.post('/logout',
+    authMiddleware.checkAccessToken,
+    authController.logout);
+
 module.exports = authRoutes;
