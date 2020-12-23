@@ -1,7 +1,7 @@
-const { models: { CARS_FILES }, tableNames: { USERS, CARS }, foreignKey: { ID } } = require('../../constants/constants');
+const { models: { CARS_FILES }, tableNames, foreignKey: { ID } } = require('../../constants/constants');
 
 module.exports = (client, DataTypes) => {
-    const Car = client.define(
+    const Cars_Files = client.define(
         CARS_FILES,
         {
             id: {
@@ -9,31 +9,33 @@ module.exports = (client, DataTypes) => {
                 primaryKey: true,
                 autoIncrement: true
             },
-            model: {
+            type: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            user_id: {
+            file: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            car_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 foreignKey: true,
-                references: {
-                    model: USERS,
+                reference: {
+                    model: tableNames.CARS,
                     key: ID
                 }
             },
-            photos: {
-                type: DataTypes.STRING
-            },
-            files: {
-                type: DataTypes.STRING
+            created_at: {
+                type: DataTypes.DATE,
+                default: client.fn('NOW')
             }
         },
         {
-            tableName: CARS,
+            tableName: tableNames.CARS_FILES,
             timestamps: false
         }
     );
 
-    return Car;
+    return Cars_Files;
 };

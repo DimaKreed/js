@@ -3,7 +3,7 @@ const { Router } = require('express');
 const usersRoutes = Router();
 
 const { usersController } = require('../controllers');
-const { userMiddleware, authMiddleware,filesMiddleware } = require('../middlewares');
+const { userMiddleware, authMiddleware, filesMiddleware } = require('../middlewares');
 
 usersRoutes.get('/',
     authMiddleware.checkAccessToken,
@@ -13,7 +13,6 @@ usersRoutes.get('/',
 usersRoutes.post('/',
     userMiddleware.checkUserValidity,
     userMiddleware.checkIsUserPresentInDataBase,
-    filesMiddleware.checkFiles,
     filesMiddleware.checkAvatar,
     usersController.createUser);
 usersRoutes.get('/params',
@@ -37,7 +36,6 @@ usersRoutes.put('/:user_id',
     userMiddleware.checkIsUserPresentInDataBase,
     userMiddleware.checkIsPasswordOk,
     userMiddleware.setNewValuesToUser,
-    filesMiddleware.checkFiles,
     filesMiddleware.checkAvatar,
     usersController.updateUser);
 usersRoutes.delete('/:user_id',

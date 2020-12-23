@@ -5,14 +5,18 @@ module.exports = {
         CARS: 'cars',
         USERS: 'users',
         O_AUTH: 'o_auth',
+        CARS_FILES: 'cars_files',
+
     },
     models: {
         CAR: 'Car',
         USER: 'User',
-        O_AUTH: 'O_Auth'
+        O_AUTH: 'O_Auth',
+        CARS_FILES: 'Cars_Files'
     },
     foreignKey: {
         USER_ID: 'user_id',
+        CAR_ID: 'car_id',
         ID: 'id'
     },
     changeTypes: {
@@ -34,5 +38,9 @@ module.exports = {
         'application/pdf', // PDF
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // XLS
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // DOC 2007
-    ]
+    ],
+    TYPES: {
+        DOC: 'doc',
+        PHOTO: 'photo'
+    }
 };

@@ -1,5 +1,5 @@
 const db = require('../database').getInstance();
-const { models: { CAR, USER } } = require('../constants/constants');
+const { models: { CARS_FILES, USER } } = require('../constants/constants');
 
 module.exports = {
 
@@ -10,7 +10,7 @@ module.exports = {
     },
 
     getUserById: (id) => {
-        const CarModel = db.getModel(CAR);
+        const CarModel = db.getModel(CARS_FILES);
         const UserModel = db.getModel(USER);
         return UserModel.findByPk(id, {
             include: CarModel,
@@ -18,7 +18,7 @@ module.exports = {
         });
     },
     wgetUsers: (where = {}, limit = 10, offset = 0) => {
-        const CarModel = db.getModel(CAR);
+        const CarModel = db.getModel(CARS_FILES);
         const UserModel = db.getModel(USER);
         return UserModel.findAll({
             where,
@@ -28,7 +28,7 @@ module.exports = {
         });
     },
     getUserByParams: (param) => {
-        const CarModel = db.getModel(CAR);
+        const CarModel = db.getModel(CARS_FILES);
         const UserModel = db.getModel(USER);
         return UserModel.findOne({
             where: param,

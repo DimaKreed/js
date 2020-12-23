@@ -1,16 +1,16 @@
 const path = require('path');
-const uuid = require('uuid').v1();
 const fs = require('fs-extra').promises;
 
 const { usersService, emailService } = require('../services');
+const { ErrorHandler, errors: { AlREADY_EXISTS, NOT_FOUND } } = require('../errors');
+const { WELCOME } = require('../constants/email.actions-enum');
+const { password: passwordHasher } = require('../helpers');
+const { fileFunctions } = require('../helpers');
 const {
     success: {
         OK, CREATED, DELETED, UPDATED
     }
 } = require('../success');
-const { ErrorHandler, errors: { AlREADY_EXISTS, NOT_FOUND } } = require('../errors');
-const { WELCOME } = require('../constants/email.actions-enum');
-const { password: passwordHasher } = require('../helpers');
 
 module.exports = {
     createUser: async (req, res, next) => {
@@ -24,14 +24,13 @@ module.exports = {
             if (avatar) {
                 const pathWithoutPublic = path.join('user', `${createdUser.id}`, 'photos');
                 const photoDir = path.join(process.cwd(), 'public', pathWithoutPublic);
-                const fileExtension = avatar.name.split('.').pop();
-                const photoName = `${uuid}.${fileExtension}`;
-                const finalPhotoPath = path.join(pathWithoutPublic, photoName);
+                const { finalPath, fileName } = fileFunctions.createPathToFileWithUUID(pathWithoutPublic, avatar);
 
-                await fs.mkdir(photoDir, { recursive: true });
-                await avatar.mv(path.join(photoDir, photoName));
+                await fileFunctions.createDirectory(photoDir);
 
-                await usersService.updateUser(createdUser.id, { avatar: finalPhotoPath });
+                await avatar.mv(path.join(photoDir, fileName));
+
+                await usersService.updateUser(createdUser.id, { avatar: finalPath });
             }
 
             await emailService.sendMail(user.email, WELCOME, { userName: user.name });
@@ -59,14 +58,13 @@ module.exports = {
             if (avatar) {
                 const pathWithoutPublic = path.join('user', `${req.userInDB.id}`, 'photos');
                 const photoDir = path.join(process.cwd(), 'public', pathWithoutPublic);
-                const fileExtension = avatar.name.split('.').pop();
-                const photoName = `${uuid}.${fileExtension}`;
-                const finalPhotoPath = path.join(pathWithoutPublic, photoName);
 
-                await fs.mkdir(photoDir, { recursive: true });
-                await avatar.mv(path.join(photoDir, photoName));
+                const { finalPath, fileName } = fileFunctions.createPathToFileWithUUID(pathWithoutPublic, avatar);
+                await fileFunctions.createDirectory(photoDir);
 
-                req.user.avatar = finalPhotoPath;
+                await avatar.mv(path.join(photoDir, fileName));
+
+                req.user.avatar = finalPath;
 
                 req.user.password = await passwordHasher.hash(req.user.password);
                 await usersService.updateUser(req.userInDB.id, req.user);

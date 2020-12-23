@@ -3,7 +3,7 @@ const { Router } = require('express');
 const carsRoutes = Router();
 
 const { carsController } = require('../controllers');
-const { carMiddleware } = require('../middlewares');
+const { carMiddleware, filesMiddleware } = require('../middlewares');
 
 carsRoutes.get('/',
     carMiddleware.checkIsCarsGot,
@@ -11,6 +11,9 @@ carsRoutes.get('/',
 carsRoutes.post('/',
     carMiddleware.checkCarValidity,
     carMiddleware.checkIsCarPresentInDataBase,
+    filesMiddleware.checkFiles,
+    filesMiddleware.checkDocs,
+    filesMiddleware.checkPhotos,
     carsController.createCar);
 carsRoutes.get('/params',
     carMiddleware.checkIsCarGot,
@@ -24,6 +27,9 @@ carsRoutes.get('/:car_id',
 carsRoutes.put('/:car_id',
     carMiddleware.checkCarValidity,
     carMiddleware.checkIsCarPresentInDataBase,
+    filesMiddleware.checkFiles,
+    filesMiddleware.checkDocs,
+    filesMiddleware.checkPhotos,
     carsController.updateCar);
 carsRoutes.delete('/:car_id',
     carMiddleware.checkIsCarPresentInDataBase,

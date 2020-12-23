@@ -1,4 +1,4 @@
-const { tableNames, NOW } = require('../../constants/constants');
+const { tableNames, NOW, foreignKey: { ID } } = require('../../constants/constants');
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
@@ -48,7 +48,7 @@ module.exports = {
                 foreignKey: true,
                 references: {
                     model: tableNames.USERS,
-                    key: 'id'
+                    key: ID
                 }
             }
         });
@@ -74,7 +74,37 @@ module.exports = {
                 foreignKey: true,
                 references: {
                     model: tableNames.USERS,
-                    key: 'id'
+                    key: ID
+                }
+            },
+            created_at: {
+                type: Sequelize.DataTypes.DATE,
+                default: Sequelize.fn(NOW)
+            }
+        });
+
+        await queryInterface.createTable(tableNames.CARS_FILES, {
+            id: {
+                type: Sequelize.DataTypes.INTEGER,
+                autoIncrement: true,
+                allowNull: false,
+                primaryKey: true
+            },
+            type: {
+                type: Sequelize.DataTypes.STRING,
+                allowNull: false,
+            },
+            file: {
+                type: Sequelize.DataTypes.STRING,
+                allowNull: false,
+            },
+            car_id: {
+                type: Sequelize.DataTypes.INTEGER,
+                allowNull: false,
+                foreignKey: true,
+                references: {
+                    model: tableNames.CARS,
+                    key: ID
                 }
             },
             created_at: {

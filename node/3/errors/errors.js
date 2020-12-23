@@ -35,7 +35,7 @@ module.exports = {
         message: 'You can upload only 10 photos',
         code: BAD_REQUEST
     },
-    ONLY_10_FILES: {
+    ONLY_10_DOCS: {
         message: 'You can upload only 10 files',
         code: BAD_REQUEST
     },
