@@ -8,7 +8,7 @@ const routes = require('./routes');
 const app = express();
 db.setModels();
 
-app.use(express.static(path.join(process.cwd(), 'dataForAll')));
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', '.hbs');
